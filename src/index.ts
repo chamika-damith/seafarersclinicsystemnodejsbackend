@@ -8,6 +8,7 @@ import {appointmentRouter} from "./routes/appointment-route";
 import {medicalRecordRoute} from "./routes/medicalRecord-route";
 
 
+
 const app=express();
 const prisma = new PrismaClient();
 dotenv.config();
