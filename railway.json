@@ -1,0 +1,15 @@
+{
+  "services": {
+    "app": {
+      "build": {
+        "command": "npm install && npm run build"
+      },
+      "run": {
+        "command": "node server.js"
+      },
+      "env": {
+        "PORT": "3000"
+      }
+    }
+  }
+}
