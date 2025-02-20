@@ -1,44 +1,39 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Patient {
-  id               String        @id
+  id               String        @id @map("_id")
   name             String
   dateOfBirth      String
   nationality      String
   seamanBookNumber String
   vesselName       String?
   company          String?
-  appointments     Appointment[]
+  appointments     Appointment[] @relation("PatientAppointments")
 }
 
 model Appointment {
-  id                String          @id
+  id                String          @id @map("_id")
   patientId         String
-  patient           Patient         @relation(fields: [patientId], references: [id])
+  patient           Patient         @relation(fields: [patientId], references: [id], name: "PatientAppointments")
   date              String
   time              String
   appointmentType   String
   appointmentStatus String
   notes             String?
-  MedicalRecord     MedicalRecord[]
+  MedicalRecord     MedicalRecord[] @relation("AppointmentRecords")
 }
 
 model MedicalRecord {
-  id                    String       @id
+  id                    String       @id @map("_id")
   appointmentId         String?
-  appointment           Appointment? @relation(fields: [appointmentId], references: [id])
+  appointment           Appointment? @relation(fields: [appointmentId], references: [id], name: "AppointmentRecords")
   date                  String
   diagnosis             String
   treatment             String
